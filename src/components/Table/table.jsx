@@ -4,16 +4,16 @@ import Pagination from "react-js-pagination";
 import "./style.css";
 import { getRecordsAPI } from "../../store/slice/filecrudSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 const singlePageLimit = 5;
 
 export default function TableComponent({ Customers }) {
-  const [count, setCount] = useState(46);
+  const [count, setCount] = useState(60);
   const [modal, setModal] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const [search, setSearch] = useState("");
+  const [incompleteSearch, setInCompletesearch] = useState("");
   const [modalData, setModalData] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -49,12 +49,7 @@ export default function TableComponent({ Customers }) {
     axios
       .post("http://localhost:3010/app/deleteData", modalData)
       .then((res) => {
-        console.log(res);
-        getRecordsAPI({
-          pageLimit: singlePageLimit,
-          activePage: activePage,
-          searchParam: search,
-        });
+        setActivePage(1);
       })
       .catch((err) => {
         console.log(err);
@@ -68,10 +63,11 @@ export default function TableComponent({ Customers }) {
       ) : (
         <>
           <input
-            type="search"
+            type="text"
             placeholder="search..."
             className="date"
-            value={search}
+            value={incompleteSearch}
+            onChange={(e) => setInCompletesearch(e.target.value)}
             onKeyDown={(e) => enterKeyPress(e)}
           ></input>
           <div

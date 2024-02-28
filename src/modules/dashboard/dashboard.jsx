@@ -20,7 +20,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios.get("http://localhost:3010/app/getDashboardData").then((data) => {
-      console.log(data);
       setDashboardData(data.data);
     });
   }, []);
