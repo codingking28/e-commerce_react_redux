@@ -10,10 +10,18 @@ import CreateRecords from "../CreateRecord/createRecord";
 
 export default function Dashboard() {
   const [show, setShow] = useState(false);
+  const [dashboardData, setDashboardData] = useState({
+    recordsCount: 0,
+    usersCount: 0,
+    activeSession: 0,
+    soonInActive: 0,
+    refersh: 0,
+  });
 
   useEffect(() => {
     axios.get("http://localhost:3010/app/getDashboardData").then((data) => {
       console.log(data);
+      setDashboardData(data.data);
     });
   }, []);
   const handleClose = () => setShow(false);
@@ -67,7 +75,7 @@ export default function Dashboard() {
               <div className="middle">
                 <div className="left">
                   <h3>Total Records</h3>
-                  <h1>250</h1>
+                  <h1>{dashboardData.recordsCount}</h1>
                 </div>
                 <div className="progress">
                   <svg>
@@ -86,7 +94,7 @@ export default function Dashboard() {
               <div className="middle">
                 <div className="left">
                   <h3>Total Users</h3>
-                  <h1>150</h1>
+                  <h1>{dashboardData.usersCount}</h1>
                 </div>
                 <div className="progress">
                   <svg>
@@ -105,7 +113,7 @@ export default function Dashboard() {
               <div className="middle">
                 <div className="left">
                   <h3>Total Sessions</h3>
-                  <h1>80</h1>
+                  <h1>{dashboardData.activeSession}</h1>
                 </div>
                 <div className="progress">
                   <svg>
@@ -155,7 +163,7 @@ export default function Dashboard() {
                   <h3>ACTIVE RECORDS</h3>
                   <small className="text-muted">Last 24 hours</small>
                 </div>
-                <h5 className="success">25</h5>
+                <h5 className="success">{dashboardData.activeSession}</h5>
               </div>
             </div>
 
@@ -165,10 +173,10 @@ export default function Dashboard() {
               </div>
               <div className="item-right">
                 <div className="info">
-                  <h3>INACTIVE RECORDS</h3>
+                  <h3>SOON INACTIVE RECORDS</h3>
                   <small className="text-muted">Last 24 hours</small>
                 </div>
-                <h5 className="danger">15</h5>
+                <h5 className="danger">{dashboardData.soonInActive}</h5>
               </div>
             </div>
 
@@ -183,7 +191,7 @@ export default function Dashboard() {
                   <h3>REFRESHED RECORDS</h3>
                   <small className="text-muted">Last 24 hours</small>
                 </div>
-                <h5 className="warning">05</h5>
+                <h5 className="warning">{dashboardData.refersh}</h5>
               </div>
             </div>
 

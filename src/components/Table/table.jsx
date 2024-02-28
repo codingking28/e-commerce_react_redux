@@ -109,11 +109,11 @@ export default function TableComponent({ Customers }) {
                           {data.found ? "Active" : "InActive"}
                         </td>
                         <td className="primary">
-                          <Link to={`/form/${data.delegate_id}`}>
+                          {/* <Link to={`/form/${data.delegate_id}`}>
                             <span className="material-symbols-outlined button">
                               app_registration
                             </span>
-                          </Link>
+                          </Link> */}
                           <span
                             className="material-symbols-outlined button"
                             onClick={() => {
