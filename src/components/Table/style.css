@@ -61,3 +61,27 @@ table tbody tr:last-child td {
   border-radius: 50%;
   margin-top: 0.8rem;
 }
+.button {
+  cursor: pointer;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-variant);
+}

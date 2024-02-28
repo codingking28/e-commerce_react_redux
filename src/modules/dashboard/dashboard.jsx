@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 import profile from "../../assets/profile.jpg";
 import "./style.css";
 
 import TableComponent from "../../components/Table/table";
 import { Modal, Button } from "react-bootstrap";
-import { useEffect } from "react";
 import axios from "axios";
+import CreateRecords from "../CreateRecord/createRecord";
 
 export default function Dashboard() {
   const [show, setShow] = useState(false);
@@ -122,68 +122,6 @@ export default function Dashboard() {
 
           <div className="recent-records">
             <h2>Recent Records</h2>
-            {/* <table>
-              <thead>
-                <tr>
-                  <th>Delegate ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>View Records</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1223</td>
-                  <td>Mohan</td>
-                  <td>Raj</td>
-                  <td>
-                    <span className="material-symbols-outlined">
-                      visibility
-                    </span>
-                  </td>
-                  <td className="success">Active</td>
-                  <td className="primary">
-                    <span className="material-symbols-outlined">
-                      drag_indicator
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1223</td>
-                  <td>Mohan</td>
-                  <td>Raj</td>
-                  <td>
-                    <span className="material-symbols-outlined">
-                      visibility
-                    </span>
-                  </td>
-                  <td className="success">Active</td>
-                  <td className="primary">
-                    <span className="material-symbols-outlined">
-                      drag_indicator
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1223</td>
-                  <td>Mohan</td>
-                  <td>Raj</td>
-                  <td>
-                    <span className="material-symbols-outlined">
-                      visibility
-                    </span>
-                  </td>
-                  <td className="warning">Pending</td>
-                  <td className="primary">
-                    <span className="material-symbols-outlined">
-                      drag_indicator
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table> */}
             <TableComponent />
           </div>
         </main>
@@ -249,7 +187,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="item add-record">
+            <div className="item add-record button">
               <div onClick={handleShow}>
                 <span className="material-symbols-outlined">add</span>
                 <h3>Add Record</h3>
@@ -258,17 +196,23 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        size="xl"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Create Record</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <CreateRecords />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

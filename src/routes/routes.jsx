@@ -1,11 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AddUser, AddUserRedux, Dashboard, LogIn } from "../modules";
+import {
+  AddUser,
+  AddUserRedux,
+  CreateRecords,
+  Dashboard,
+  EditRecords,
+  LogIn,
+} from "../modules";
 
 let routes = [
   { path: "/login", component: LogIn },
   { path: "/add_user", component: AddUser },
   { path: "/add_user_redux", component: AddUserRedux },
   { path: "/dashboard", component: Dashboard },
+  { path: "/edit_record/:id", component: EditRecords },
+  { path: "/create_record", component: CreateRecords },
 ];
 export default function AppRoute() {
   return (
