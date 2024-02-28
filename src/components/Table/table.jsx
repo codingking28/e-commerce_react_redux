@@ -50,6 +50,11 @@ export default function TableComponent({ Customers }) {
       .post("http://localhost:3010/app/deleteData", modalData)
       .then((res) => {
         console.log(res);
+        getRecordsAPI({
+          pageLimit: singlePageLimit,
+          activePage: activePage,
+          searchParam: search,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -149,8 +154,11 @@ export default function TableComponent({ Customers }) {
         </>
       )}
       <Modal
-        show={modal}
-        onHide={handleClose}
+        show={modal || deleteModal}
+        onHide={() => {
+          handleClose();
+          handleDeleteClose();
+        }}
         backdrop="static"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -166,74 +174,66 @@ export default function TableComponent({ Customers }) {
             overflowX: "hidden",
           }}
         >
-          <Table style={{ tableLayout: "fixed" }} table table-borderless>
-            <thead style={{ position: "sticky", top: "0" }}>
-              <tr>
-                <th>Title</th>
-                <th>Trainer</th>
-                <th>Country</th>
-                <th>Course ID</th>
-                <th>Valid From</th>
-                <th>Valid Until</th>
-                <th>Completed On</th>
-                <th>Previous Course Validity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {modalData.length > 0 ? (
-                modalData.map((data, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{data.course_title}</td>
-                      <td>{data.training_provider}</td>
-                      <td>{data.country}</td>
-                      <td>{data.course_code}</td>
-                      <td>{data.valid_from}</td>
-                      <td>{data.valid_until}</td>
-                      <td>{data.completed_on}</td>
-                      <td>{data.previous_course_valid_until}</td>
-                    </tr>
-                  );
-                })
-              ) : (
+          {!deleteModal ? (
+            <Table style={{ tableLayout: "fixed" }} table table-borderless>
+              <thead style={{ position: "sticky", top: "0" }}>
                 <tr>
-                  <td>No Records</td>
+                  <th>Title</th>
+                  <th>Trainer</th>
+                  <th>Country</th>
+                  <th>Course ID</th>
+                  <th>Valid From</th>
+                  <th>Valid Until</th>
+                  <th>Completed On</th>
+                  <th>Previous Course Validity</th>
                 </tr>
-              )}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {modalData.length > 0 ? (
+                  modalData.map((data, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{data.course_title}</td>
+                        <td>{data.training_provider}</td>
+                        <td>{data.country}</td>
+                        <td>{data.course_code}</td>
+                        <td>{data.valid_from}</td>
+                        <td>{data.valid_until}</td>
+                        <td>{data.completed_on}</td>
+                        <td>{data.previous_course_valid_until}</td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td>No Records</td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          ) : (
+            <div>
+              Are you sure to delete user{" "}
+              {(modalData.first_name, modalData.last_name)}
+              <div>
+                <Button variant="danger" onClick={handleDelete}>
+                  Delete
+                </Button>
+                <Button variant="primary" onClick={handleDeleteClose}>
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal
-        show={deleteModal}
-        onHide={handleDeleteClose}
-        backdrop="static"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        size="xl"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure to delete user{" "}
-          {(modalData.first_name, modalData.last_name)}
-          <div>
-            <Button variant="danger" onClick={handleDelete}>
-              Delete
-            </Button>
-            <Button variant="primary" onClick={handleDeleteClose}>
-              Cancel
-            </Button>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleDeleteClose}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handleClose();
+              handleDeleteClose();
+            }}
+          >
             Close
           </Button>
         </Modal.Footer>
